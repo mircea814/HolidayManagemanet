@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Facultate\\AN3\\SEM II\\Practica\\HolidayManagement\\HolidayManagement.csproj": {}
+    "C:\\Users\\mirce\\Source\\Repos\\HolidayManagemanet\\HolidayManagement\\HolidayManagement.csproj": {}
   },
   "projects": {
-    "E:\\Facultate\\AN3\\SEM II\\Practica\\HolidayManagement\\HolidayManagement.csproj": {
+    "C:\\Users\\mirce\\Source\\Repos\\HolidayManagemanet\\HolidayManagement\\HolidayManagement.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Facultate\\AN3\\SEM II\\Practica\\HolidayManagement\\HolidayManagement.csproj",
+        "projectUniqueName": "C:\\Users\\mirce\\Source\\Repos\\HolidayManagemanet\\HolidayManagement\\HolidayManagement.csproj",
         "projectName": "HolidayManagement",
-        "projectPath": "E:\\Facultate\\AN3\\SEM II\\Practica\\HolidayManagement\\HolidayManagement.csproj",
+        "projectPath": "C:\\Users\\mirce\\Source\\Repos\\HolidayManagemanet\\HolidayManagement\\HolidayManagement.csproj",
         "packagesPath": "C:\\Users\\mirce\\.nuget\\packages\\",
-        "outputPath": "E:\\Facultate\\AN3\\SEM II\\Practica\\HolidayManagement\\obj\\",
+        "outputPath": "C:\\Users\\mirce\\Source\\Repos\\HolidayManagemanet\\HolidayManagement\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hVHyJorUIALJq9VHBpnbsRxMaUnD6dCk4dxlrNvUyIIY7f9sZ2W17QZrkj6cXoFys3TPEA8EUDtbmUBGGFdaBg==",
+  "dgSpecHash": "7gaCC/xafP4YbJ/TPeuqB07h7t9oReOvR43V32YXWs3vu10Ztb8S7EcP5Atu1VtIRMPVC6sXedqmDcgmENUbGg==",
   "success": true,
-  "projectFilePath": "E:\\Facultate\\AN3\\SEM II\\Practica\\HolidayManagement\\HolidayManagement.csproj",
+  "projectFilePath": "C:\\Users\\mirce\\Source\\Repos\\HolidayManagemanet\\HolidayManagement\\HolidayManagement.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mirce\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\mirce\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",
