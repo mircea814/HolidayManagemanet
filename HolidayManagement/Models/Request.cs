@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 namespace HolidayManagement.Models
 {
     public class Request
-    {
+    {  
+        [Key]
         public int RequestID { get; set; }
         public int StaffId { get; set; }
         public Staff Staff { get; set; }
