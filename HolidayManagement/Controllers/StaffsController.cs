@@ -21,7 +21,7 @@ namespace HolidayManagement.Controllers
         // GET: Staffs
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Staff.ToListAsync());
+            return View(await _context.MyStaff.ToListAsync());
         }
 
         // GET: Staffs/Details/5
@@ -32,7 +32,7 @@ namespace HolidayManagement.Controllers
                 return NotFound();
             }
 
-            var staff = await _context.Staff
+            var staff = await _context.MyStaff
                 .FirstOrDefaultAsync(m => m.StaffID == id);
             if (staff == null)
             {
@@ -72,7 +72,7 @@ namespace HolidayManagement.Controllers
                 return NotFound();
             }
 
-            var staff = await _context.Staff.FindAsync(id);
+            var staff = await _context.MyStaff.FindAsync(id);
             if (staff == null)
             {
                 return NotFound();
@@ -123,7 +123,7 @@ namespace HolidayManagement.Controllers
                 return NotFound();
             }
 
-            var staff = await _context.Staff
+            var staff = await _context.MyStaff
                 .FirstOrDefaultAsync(m => m.StaffID == id);
             if (staff == null)
             {
@@ -138,15 +138,15 @@ namespace HolidayManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var staff = await _context.Staff.FindAsync(id);
-            _context.Staff.Remove(staff);
+            var staff = await _context.MyStaff.FindAsync(id);
+            _context.MyStaff.Remove(staff);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool StaffExists(int id)
         {
-            return _context.Staff.Any(e => e.StaffID == id);
+            return _context.MyStaff.Any(e => e.StaffID == id);
         }
     }
 }

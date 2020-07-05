@@ -1,5 +1,11 @@
 ﻿@model HolidayManagement.Models.Staff
 
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
 <h4>Staff</h4>
 <hr />
 <div class="row">
@@ -17,9 +23,9 @@
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Offices" class="control-label"></label>
-                <input asp-for="Offices" class="form-control" />
-                <span asp-validation-for="Offices" class="text-danger"></span>
+                <label asp-for="Office" class="control-label"></label>
+                <input asp-for="Office" class="form-control" />
+                <span asp-validation-for="Office" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Status" class="control-label"></label>

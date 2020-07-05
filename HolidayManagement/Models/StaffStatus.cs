@@ -9,6 +9,7 @@ namespace HolidayManagement.Models
     public class StaffStatus
     {
         [Key]
+        public int StatusID { get; set; }
         public string Status { get; set; }
     }
 }

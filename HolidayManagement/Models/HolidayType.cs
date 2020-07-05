@@ -9,6 +9,7 @@ namespace HolidayManagement.Models
     public class HolidayType
     {
         [Key]
+        public int HolidayTypeID { get; set; }
         public string Type { get; set; }
     }
 }

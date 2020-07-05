@@ -1,6 +1,13 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\HolidayManagement",
+    "\\HolidayManagement\\Areas",
+    "\\HolidayManagement\\Areas\\Identity",
+    "\\HolidayManagement\\Areas\\Identity\\Pages",
+    "\\HolidayManagement\\Areas\\Identity\\Pages\\Account",
+    "\\HolidayManagement\\Models"
   ],
+  "SelectedNode": "\\HolidayManagement\\HolidayManagement.sln",
   "PreviewInSolutionExplorer": false
 }

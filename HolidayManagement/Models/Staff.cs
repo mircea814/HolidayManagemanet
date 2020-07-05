@@ -13,8 +13,8 @@ namespace HolidayManagement.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Office { get; set; }
-        public Office Offices { get; set; }
+        public ICollection<Office> Offices { get; set; }
         public string Status { get; set; }
-        public StaffStatus StaffStatus { get; set; }
+        public ICollection<StaffStatus> StaffStatus { get; set; }
     }
 }

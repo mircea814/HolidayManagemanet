@@ -11,9 +11,19 @@
     <Compile Remove="Migrations\20200703102642_First.Designer.cs" />
     <Compile Remove="Migrations\20200703104643_First.cs" />
     <Compile Remove="Migrations\20200703104643_First.Designer.cs" />
+    <Compile Remove="Migrations\20200703110008_First.cs" />
+    <Compile Remove="Migrations\20200703110008_First.Designer.cs" />
+    <Compile Remove="Migrations\20200704080537_First.cs" />
+    <Compile Remove="Migrations\20200704080537_First.Designer.cs" />
+    <Compile Remove="Migrations\20200704082507_First.cs" />
+    <Compile Remove="Migrations\20200704082507_First.Designer.cs" />
+    <Compile Remove="Migrations\20200704085421_First.cs" />
+    <Compile Remove="Migrations\20200704085421_First.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />

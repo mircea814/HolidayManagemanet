@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using HolidayManagement.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +26,40 @@ namespace HolidayManagement
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddRazorPages();
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<Context>();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                //PAssword settings
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = false;
+                options.Password.RequiredUniqueChars = 4;
+
+                //Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+                options.Lockout.MaxFailedAccessAttempts = 15;
+                options.Lockout.AllowedForNewUsers = true;
+
+                //User settings
+                options.User.RequireUniqueEmail = true;
+            });
+
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+
+                options.LoginPath = "/Identity/Account/Login";
+                options.AccessDeniedPath = "/Identity/Account/AccesDenied";
+                options.SlidingExpiration = true;
+
+            });
 
             var connection = @"Server=(localdb)\mssqllocaldb;Database=HolidaysDB;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<Context>
@@ -45,7 +80,7 @@ namespace HolidayManagement
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -53,6 +88,7 @@ namespace HolidayManagement
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

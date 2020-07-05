@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using HolidayManagement.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HolidayManagement.Controllers
 {
@@ -18,15 +15,12 @@ namespace HolidayManagement.Controllers
             _logger = logger;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        [AllowAnonymous]
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

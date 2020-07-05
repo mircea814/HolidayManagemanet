@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,8 +11,8 @@ namespace HolidayManagement.Models
         [Key]
         public int RequestID { get; set; }
         public int StaffId { get; set; }
-        public Staff Staff { get; set; }
+        public ICollection<Staff> Staff { get; set; }
         public string RequestStatus { get; set; }
-        public RequestStatus Status { get; set; }
+        public ICollection<RequestStatus> Status { get; set; }
     }
 }

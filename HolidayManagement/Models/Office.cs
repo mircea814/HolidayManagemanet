@@ -10,6 +10,7 @@ namespace HolidayManagement.Models
     public class Office
     {
         [Key]
+        public int OfficeID { get; set; }
         public string OfficeName { get; set; }
     }
 }

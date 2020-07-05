@@ -1,5 +1,11 @@
 ﻿@model IEnumerable<HolidayManagement.Models.Staff>
 
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -13,7 +19,7 @@
                 @Html.DisplayNameFor(model => model.LastName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Offices)
+                @Html.DisplayNameFor(model => model.Office)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Status)
@@ -31,7 +37,7 @@
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Offices)
+                @Html.DisplayFor(modelItem => item.Office)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
