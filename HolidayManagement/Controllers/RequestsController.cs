@@ -21,7 +21,8 @@ namespace HolidayManagement.Controllers
         // GET: Requests
         public async Task<IActionResult> Index()
         {
-            return View(await _context.MyRequests.ToListAsync());
+            var context = _context.MyRequests.Include(r => r.HolidayType).Include(r => r.RequestStatus).Include(r => r.Staff);
+            return View(await context.ToListAsync());
         }
 
         // GET: Requests/Details/5
@@ -33,6 +34,9 @@ namespace HolidayManagement.Controllers
             }
 
             var request = await _context.MyRequests
+                .Include(r => r.HolidayType)
+                .Include(r => r.RequestStatus)
+                .Include(r => r.Staff)
                 .FirstOrDefaultAsync(m => m.RequestID == id);
             if (request == null)
             {
@@ -45,6 +49,9 @@ namespace HolidayManagement.Controllers
         // GET: Requests/Create
         public IActionResult Create()
         {
+            ViewData["HolidayTypeID"] = new SelectList(_context.MyHolidayTypes, "HolidayTypeID", "HolidayTypeID");
+            ViewData["RequestStatusID"] = new SelectList(_context.MyRequestStatuses, "RequestStatusID", "RequestStatusID");
+            ViewData["StaffID"] = new SelectList(_context.MyStaff, "StaffID", "StaffID");
             return View();
         }
 
@@ -53,7 +60,7 @@ namespace HolidayManagement.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RequestID,StaffId,RequestStatus")] Request request)
+        public async Task<IActionResult> Create([Bind("RequestID,StaffID,RequestStatusID,StartDate,EndDate,HolidayTypeID")] Request request)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +68,9 @@ namespace HolidayManagement.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["HolidayTypeID"] = new SelectList(_context.MyHolidayTypes, "HolidayTypeID", "HolidayTypeID", request.HolidayTypeID);
+            ViewData["RequestStatusID"] = new SelectList(_context.MyRequestStatuses, "RequestStatusID", "RequestStatusID", request.RequestStatusID);
+            ViewData["StaffID"] = new SelectList(_context.MyStaff, "StaffID", "StaffID", request.StaffID);
             return View(request);
         }
 
@@ -77,6 +87,9 @@ namespace HolidayManagement.Controllers
             {
                 return NotFound();
             }
+            ViewData["HolidayTypeID"] = new SelectList(_context.MyHolidayTypes, "HolidayTypeID", "HolidayTypeID", request.HolidayTypeID);
+            ViewData["RequestStatusID"] = new SelectList(_context.MyRequestStatuses, "RequestStatusID", "RequestStatusID", request.RequestStatusID);
+            ViewData["StaffID"] = new SelectList(_context.MyStaff, "StaffID", "StaffID", request.StaffID);
             return View(request);
         }
 
@@ -85,7 +98,7 @@ namespace HolidayManagement.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RequestID,StaffId,RequestStatus")] Request request)
+        public async Task<IActionResult> Edit(int id, [Bind("RequestID,StaffID,RequestStatusID,StartDate,EndDate,HolidayTypeID")] Request request)
         {
             if (id != request.RequestID)
             {
@@ -112,6 +125,9 @@ namespace HolidayManagement.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["HolidayTypeID"] = new SelectList(_context.MyHolidayTypes, "HolidayTypeID", "HolidayTypeID", request.HolidayTypeID);
+            ViewData["RequestStatusID"] = new SelectList(_context.MyRequestStatuses, "RequestStatusID", "RequestStatusID", request.RequestStatusID);
+            ViewData["StaffID"] = new SelectList(_context.MyStaff, "StaffID", "StaffID", request.StaffID);
             return View(request);
         }
 
@@ -124,6 +140,9 @@ namespace HolidayManagement.Controllers
             }
 
             var request = await _context.MyRequests
+                .Include(r => r.HolidayType)
+                .Include(r => r.RequestStatus)
+                .Include(r => r.Staff)
                 .FirstOrDefaultAsync(m => m.RequestID == id);
             if (request == null)
             {
@@ -131,6 +150,29 @@ namespace HolidayManagement.Controllers
             }
 
             return View(request);
+        }
+
+        public async Task<IActionResult> Reject(int id)
+        {
+            var request = await _context.MyRequests.FindAsync(id);
+            request.RequestStatus = _context.MyRequestStatuses.Find(2);
+
+            try
+            {
+                _context.Update(request);
+                await _context.SaveChangesAsync();
+            }catch(DbUpdateConcurrencyException)
+            {
+                if(RequestExists(request.RequestID))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: Requests/Delete/5

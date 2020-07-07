@@ -47,33 +47,55 @@ namespace HolidayManagement.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MyHolidays",
+                name: "MyHolidayTypes",
                 columns: table => new
                 {
-                    HolidayID = table.Column<int>(nullable: false)
+                    HolidayTypeID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    HolodayTypes = table.Column<string>(nullable: true),
-                    StaffID = table.Column<int>(nullable: false),
-                    TotalNumberOfDays = table.Column<int>(nullable: false),
-                    DaysLeft = table.Column<int>(nullable: false)
+                    Type = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MyHolidays", x => x.HolidayID);
+                    table.PrimaryKey("PK_MyHolidayTypes", x => x.HolidayTypeID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "MyRequests",
+                name: "MyOffices",
                 columns: table => new
                 {
-                    RequestID = table.Column<int>(nullable: false)
+                    OfficeID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StaffId = table.Column<int>(nullable: false),
-                    RequestStatus = table.Column<string>(nullable: true)
+                    OfficeName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MyRequests", x => x.RequestID);
+                    table.PrimaryKey("PK_MyOffices", x => x.OfficeID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MyRequestStatuses",
+                columns: table => new
+                {
+                    RequestStatusID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Status = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MyRequestStatuses", x => x.RequestStatusID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MyStaffStatuses",
+                columns: table => new
+                {
+                    StaffStatusID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Status = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MyStaffStatuses", x => x.StaffStatusID);
                 });
 
             migrationBuilder.CreateTable(
@@ -183,46 +205,6 @@ namespace HolidayManagement.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MyHolidayTypes",
-                columns: table => new
-                {
-                    HolidayTypeID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<string>(nullable: true),
-                    HolidayID = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MyHolidayTypes", x => x.HolidayTypeID);
-                    table.ForeignKey(
-                        name: "FK_MyHolidayTypes_MyHolidays_HolidayID",
-                        column: x => x.HolidayID,
-                        principalTable: "MyHolidays",
-                        principalColumn: "HolidayID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MyRequestStatuses",
-                columns: table => new
-                {
-                    RequestStatusID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Status = table.Column<string>(nullable: true),
-                    RequestID = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MyRequestStatuses", x => x.RequestStatusID);
-                    table.ForeignKey(
-                        name: "FK_MyRequestStatuses_MyRequests_RequestID",
-                        column: x => x.RequestID,
-                        principalTable: "MyRequests",
-                        principalColumn: "RequestID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "MyStaff",
                 columns: table => new
                 {
@@ -230,66 +212,87 @@ namespace HolidayManagement.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    Office = table.Column<string>(nullable: true),
-                    Status = table.Column<string>(nullable: true),
-                    HolidayID = table.Column<int>(nullable: true),
-                    RequestID = table.Column<int>(nullable: true)
+                    OfficeID = table.Column<int>(nullable: false),
+                    StaffStatusID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MyStaff", x => x.StaffID);
                     table.ForeignKey(
-                        name: "FK_MyStaff_MyHolidays_HolidayID",
-                        column: x => x.HolidayID,
-                        principalTable: "MyHolidays",
-                        principalColumn: "HolidayID",
-                        onDelete: ReferentialAction.Restrict);
+                        name: "FK_MyStaff_MyOffices_OfficeID",
+                        column: x => x.OfficeID,
+                        principalTable: "MyOffices",
+                        principalColumn: "OfficeID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MyStaff_MyRequests_RequestID",
-                        column: x => x.RequestID,
-                        principalTable: "MyRequests",
-                        principalColumn: "RequestID",
-                        onDelete: ReferentialAction.Restrict);
+                        name: "FK_MyStaff_MyStaffStatuses_StaffStatusID",
+                        column: x => x.StaffStatusID,
+                        principalTable: "MyStaffStatuses",
+                        principalColumn: "StaffStatusID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "MyOffices",
+                name: "MyHolidays",
                 columns: table => new
                 {
-                    OfficeID = table.Column<int>(nullable: false)
+                    HolidayID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OfficeName = table.Column<string>(nullable: true),
-                    StaffID = table.Column<int>(nullable: true)
+                    HolidayTypeID = table.Column<int>(nullable: false),
+                    StaffID = table.Column<int>(nullable: false),
+                    TotalNumberOfDays = table.Column<int>(nullable: false),
+                    DaysLeft = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MyOffices", x => x.OfficeID);
+                    table.PrimaryKey("PK_MyHolidays", x => x.HolidayID);
                     table.ForeignKey(
-                        name: "FK_MyOffices_MyStaff_StaffID",
+                        name: "FK_MyHolidays_MyHolidayTypes_HolidayTypeID",
+                        column: x => x.HolidayTypeID,
+                        principalTable: "MyHolidayTypes",
+                        principalColumn: "HolidayTypeID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MyHolidays_MyStaff_StaffID",
                         column: x => x.StaffID,
                         principalTable: "MyStaff",
                         principalColumn: "StaffID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "MyStaffStatuses",
+                name: "MyRequests",
                 columns: table => new
                 {
-                    StatusID = table.Column<int>(nullable: false)
+                    RequestID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Status = table.Column<string>(nullable: true),
-                    StaffID = table.Column<int>(nullable: true)
+                    StaffID = table.Column<int>(nullable: false),
+                    RequestStatusID = table.Column<int>(nullable: false),
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    EndDate = table.Column<DateTime>(nullable: false),
+                    HolidayTypeID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MyStaffStatuses", x => x.StatusID);
+                    table.PrimaryKey("PK_MyRequests", x => x.RequestID);
                     table.ForeignKey(
-                        name: "FK_MyStaffStatuses_MyStaff_StaffID",
+                        name: "FK_MyRequests_MyHolidayTypes_HolidayTypeID",
+                        column: x => x.HolidayTypeID,
+                        principalTable: "MyHolidayTypes",
+                        principalColumn: "HolidayTypeID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MyRequests_MyRequestStatuses_RequestStatusID",
+                        column: x => x.RequestStatusID,
+                        principalTable: "MyRequestStatuses",
+                        principalColumn: "RequestStatusID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MyRequests_MyStaff_StaffID",
                         column: x => x.StaffID,
                         principalTable: "MyStaff",
                         principalColumn: "StaffID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -332,34 +335,39 @@ namespace HolidayManagement.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MyHolidayTypes_HolidayID",
-                table: "MyHolidayTypes",
-                column: "HolidayID");
+                name: "IX_MyHolidays_HolidayTypeID",
+                table: "MyHolidays",
+                column: "HolidayTypeID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MyOffices_StaffID",
-                table: "MyOffices",
+                name: "IX_MyHolidays_StaffID",
+                table: "MyHolidays",
                 column: "StaffID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MyRequestStatuses_RequestID",
-                table: "MyRequestStatuses",
-                column: "RequestID");
+                name: "IX_MyRequests_HolidayTypeID",
+                table: "MyRequests",
+                column: "HolidayTypeID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MyStaff_HolidayID",
-                table: "MyStaff",
-                column: "HolidayID");
+                name: "IX_MyRequests_RequestStatusID",
+                table: "MyRequests",
+                column: "RequestStatusID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MyStaff_RequestID",
-                table: "MyStaff",
-                column: "RequestID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MyStaffStatuses_StaffID",
-                table: "MyStaffStatuses",
+                name: "IX_MyRequests_StaffID",
+                table: "MyRequests",
                 column: "StaffID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MyStaff_OfficeID",
+                table: "MyStaff",
+                column: "OfficeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MyStaff_StaffStatusID",
+                table: "MyStaff",
+                column: "StaffStatusID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -380,16 +388,10 @@ namespace HolidayManagement.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "MyHolidayTypes");
+                name: "MyHolidays");
 
             migrationBuilder.DropTable(
-                name: "MyOffices");
-
-            migrationBuilder.DropTable(
-                name: "MyRequestStatuses");
-
-            migrationBuilder.DropTable(
-                name: "MyStaffStatuses");
+                name: "MyRequests");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -398,13 +400,19 @@ namespace HolidayManagement.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+                name: "MyHolidayTypes");
+
+            migrationBuilder.DropTable(
+                name: "MyRequestStatuses");
+
+            migrationBuilder.DropTable(
                 name: "MyStaff");
 
             migrationBuilder.DropTable(
-                name: "MyHolidays");
+                name: "MyOffices");
 
             migrationBuilder.DropTable(
-                name: "MyRequests");
+                name: "MyStaffStatuses");
         }
     }
 }

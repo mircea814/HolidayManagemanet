@@ -10,10 +10,10 @@ namespace HolidayManagement.Models
     {
      [Key]
         public int HolidayID { get; set; }
-        public string HolodayTypes { get; set; }
-        public ICollection<HolidayType> HolidayType { get; set; }
+        public int HolidayTypeID { get; set; }
+        public HolidayType HolidayType { get; set; }
         public int StaffID { get; set; }
-        public ICollection<Staff> Staff { get; set; }
+        public Staff Staff { get; set; }
         public int TotalNumberOfDays { get; set; }
         public int DaysLeft { get; set; }
 

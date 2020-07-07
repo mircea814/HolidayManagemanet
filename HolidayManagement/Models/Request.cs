@@ -10,9 +10,13 @@ namespace HolidayManagement.Models
     {  
         [Key]
         public int RequestID { get; set; }
-        public int StaffId { get; set; }
-        public ICollection<Staff> Staff { get; set; }
-        public string RequestStatus { get; set; }
-        public ICollection<RequestStatus> Status { get; set; }
+        public int StaffID { get; set; }
+        public Staff Staff { get; set; }
+        public int RequestStatusID { get; set; }
+        public RequestStatus RequestStatus { get; set; }
+        public DateTime StartDate { get; set;}
+        public DateTime EndDate { get; set; }
+        public int HolidayTypeID { get; set; }
+        public HolidayType HolidayType { get; set; }
     }
 }

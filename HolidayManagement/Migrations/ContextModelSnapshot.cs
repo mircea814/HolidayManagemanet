@@ -29,8 +29,8 @@ namespace HolidayManagement.Migrations
                     b.Property<int>("DaysLeft")
                         .HasColumnType("int");
 
-                    b.Property<string>("HolodayTypes")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("HolidayTypeID")
+                        .HasColumnType("int");
 
                     b.Property<int>("StaffID")
                         .HasColumnType("int");
@@ -39,6 +39,10 @@ namespace HolidayManagement.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("HolidayID");
+
+                    b.HasIndex("HolidayTypeID");
+
+                    b.HasIndex("StaffID");
 
                     b.ToTable("MyHolidays");
                 });
@@ -50,15 +54,10 @@ namespace HolidayManagement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("HolidayID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("HolidayTypeID");
-
-                    b.HasIndex("HolidayID");
 
                     b.ToTable("MyHolidayTypes");
                 });
@@ -73,12 +72,7 @@ namespace HolidayManagement.Migrations
                     b.Property<string>("OfficeName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("StaffID")
-                        .HasColumnType("int");
-
                     b.HasKey("OfficeID");
-
-                    b.HasIndex("StaffID");
 
                     b.ToTable("MyOffices");
                 });
@@ -90,13 +84,28 @@ namespace HolidayManagement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("RequestStatus")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("StaffId")
+                    b.Property<int>("HolidayTypeID")
                         .HasColumnType("int");
 
+                    b.Property<int>("RequestStatusID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StaffID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("RequestID");
+
+                    b.HasIndex("HolidayTypeID");
+
+                    b.HasIndex("RequestStatusID");
+
+                    b.HasIndex("StaffID");
 
                     b.ToTable("MyRequests");
                 });
@@ -108,15 +117,10 @@ namespace HolidayManagement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("RequestID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RequestStatusID");
-
-                    b.HasIndex("RequestID");
 
                     b.ToTable("MyRequestStatuses");
                 });
@@ -131,46 +135,35 @@ namespace HolidayManagement.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("HolidayID")
-                        .HasColumnType("int");
-
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Office")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("RequestID")
+                    b.Property<int>("OfficeID")
                         .HasColumnType("int");
 
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("StaffStatusID")
+                        .HasColumnType("int");
 
                     b.HasKey("StaffID");
 
-                    b.HasIndex("HolidayID");
+                    b.HasIndex("OfficeID");
 
-                    b.HasIndex("RequestID");
+                    b.HasIndex("StaffStatusID");
 
                     b.ToTable("MyStaff");
                 });
 
             modelBuilder.Entity("HolidayManagement.Models.StaffStatus", b =>
                 {
-                    b.Property<int>("StatusID")
+                    b.Property<int>("StaffStatusID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("StaffID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("StatusID");
-
-                    b.HasIndex("StaffID");
+                    b.HasKey("StaffStatusID");
 
                     b.ToTable("MyStaffStatuses");
                 });
@@ -371,43 +364,55 @@ namespace HolidayManagement.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("HolidayManagement.Models.HolidayType", b =>
+            modelBuilder.Entity("HolidayManagement.Models.Holiday", b =>
                 {
-                    b.HasOne("HolidayManagement.Models.Holiday", null)
-                        .WithMany("HolidayType")
-                        .HasForeignKey("HolidayID");
+                    b.HasOne("HolidayManagement.Models.HolidayType", "HolidayType")
+                        .WithMany()
+                        .HasForeignKey("HolidayTypeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HolidayManagement.Models.Staff", "Staff")
+                        .WithMany()
+                        .HasForeignKey("StaffID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("HolidayManagement.Models.Office", b =>
+            modelBuilder.Entity("HolidayManagement.Models.Request", b =>
                 {
-                    b.HasOne("HolidayManagement.Models.Staff", null)
-                        .WithMany("Offices")
-                        .HasForeignKey("StaffID");
-                });
+                    b.HasOne("HolidayManagement.Models.HolidayType", "HolidayType")
+                        .WithMany()
+                        .HasForeignKey("HolidayTypeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("HolidayManagement.Models.RequestStatus", b =>
-                {
-                    b.HasOne("HolidayManagement.Models.Request", null)
-                        .WithMany("Status")
-                        .HasForeignKey("RequestID");
+                    b.HasOne("HolidayManagement.Models.RequestStatus", "RequestStatus")
+                        .WithMany()
+                        .HasForeignKey("RequestStatusID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HolidayManagement.Models.Staff", "Staff")
+                        .WithMany()
+                        .HasForeignKey("StaffID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("HolidayManagement.Models.Staff", b =>
                 {
-                    b.HasOne("HolidayManagement.Models.Holiday", null)
-                        .WithMany("Staff")
-                        .HasForeignKey("HolidayID");
+                    b.HasOne("HolidayManagement.Models.Office", "Office")
+                        .WithMany()
+                        .HasForeignKey("OfficeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("HolidayManagement.Models.Request", null)
-                        .WithMany("Staff")
-                        .HasForeignKey("RequestID");
-                });
-
-            modelBuilder.Entity("HolidayManagement.Models.StaffStatus", b =>
-                {
-                    b.HasOne("HolidayManagement.Models.Staff", null)
-                        .WithMany("StaffStatus")
-                        .HasForeignKey("StaffID");
+                    b.HasOne("HolidayManagement.Models.StaffStatus", "StaffStatus")
+                        .WithMany()
+                        .HasForeignKey("StaffStatusID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -21,7 +21,8 @@ namespace HolidayManagement.Controllers
         // GET: Holidays
         public async Task<IActionResult> Index()
         {
-            return View(await _context.MyHolidays.ToListAsync());
+            var context = _context.MyHolidays.Include(h => h.HolidayType).Include(h => h.Staff);
+            return View(await context.ToListAsync());
         }
 
         // GET: Holidays/Details/5
@@ -33,6 +34,8 @@ namespace HolidayManagement.Controllers
             }
 
             var holiday = await _context.MyHolidays
+                .Include(h => h.HolidayType)
+                .Include(h => h.Staff)
                 .FirstOrDefaultAsync(m => m.HolidayID == id);
             if (holiday == null)
             {
@@ -45,6 +48,8 @@ namespace HolidayManagement.Controllers
         // GET: Holidays/Create
         public IActionResult Create()
         {
+            ViewData["HolidayTypeID"] = new SelectList(_context.MyHolidayTypes, "HolidayTypeID", "HolidayTypeID");
+            ViewData["StaffID"] = new SelectList(_context.MyStaff, "StaffID", "StaffID");
             return View();
         }
 
@@ -53,7 +58,7 @@ namespace HolidayManagement.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("HolidayID,HolodayTypes,StaffID,TotalNumberOfDays,DaysLeft")] Holiday holiday)
+        public async Task<IActionResult> Create([Bind("HolidayID,HolidayTypeID,StaffID,TotalNumberOfDays,DaysLeft")] Holiday holiday)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +66,8 @@ namespace HolidayManagement.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["HolidayTypeID"] = new SelectList(_context.MyHolidayTypes, "HolidayTypeID", "HolidayTypeID", holiday.HolidayTypeID);
+            ViewData["StaffID"] = new SelectList(_context.MyStaff, "StaffID", "StaffID", holiday.StaffID);
             return View(holiday);
         }
 
@@ -77,6 +84,8 @@ namespace HolidayManagement.Controllers
             {
                 return NotFound();
             }
+            ViewData["HolidayTypeID"] = new SelectList(_context.MyHolidayTypes, "HolidayTypeID", "HolidayTypeID", holiday.HolidayTypeID);
+            ViewData["StaffID"] = new SelectList(_context.MyStaff, "StaffID", "StaffID", holiday.StaffID);
             return View(holiday);
         }
 
@@ -85,7 +94,7 @@ namespace HolidayManagement.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("HolidayID,HolodayTypes,StaffID,TotalNumberOfDays,DaysLeft")] Holiday holiday)
+        public async Task<IActionResult> Edit(int id, [Bind("HolidayID,HolidayTypeID,StaffID,TotalNumberOfDays,DaysLeft")] Holiday holiday)
         {
             if (id != holiday.HolidayID)
             {
@@ -112,6 +121,8 @@ namespace HolidayManagement.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["HolidayTypeID"] = new SelectList(_context.MyHolidayTypes, "HolidayTypeID", "HolidayTypeID", holiday.HolidayTypeID);
+            ViewData["StaffID"] = new SelectList(_context.MyStaff, "StaffID", "StaffID", holiday.StaffID);
             return View(holiday);
         }
 
@@ -124,6 +135,8 @@ namespace HolidayManagement.Controllers
             }
 
             var holiday = await _context.MyHolidays
+                .Include(h => h.HolidayType)
+                .Include(h => h.Staff)
                 .FirstOrDefaultAsync(m => m.HolidayID == id);
             if (holiday == null)
             {

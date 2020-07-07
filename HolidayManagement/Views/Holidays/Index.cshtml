@@ -13,10 +13,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.HolodayTypes)
+                @Html.DisplayNameFor(model => model.HolidayID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StaffID)
+                @Html.DisplayNameFor(model => model.HolidayType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Staff)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TotalNumberOfDays)
@@ -31,10 +34,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.HolodayTypes)
+                @Html.DisplayFor(modelItem => item.HolidayID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StaffID)
+                @Html.DisplayFor(modelItem => item.HolidayType.HolidayTypeID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Staff.StaffID)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TotalNumberOfDays)
