@@ -408,3 +408,5 @@ C:\Users\mirce\Source\Repos\HolidayManagemanet\HolidayManagement\obj\Debug\netco
 C:\Users\mirce\Source\Repos\HolidayManagemanet\HolidayManagement\obj\Debug\netcoreapp3.1\Razor\Views\Staffs\Details.cshtml.g.cs
 C:\Users\mirce\Source\Repos\HolidayManagemanet\HolidayManagement\obj\Debug\netcoreapp3.1\Razor\Views\Staffs\Edit.cshtml.g.cs
 C:\Users\mirce\Source\Repos\HolidayManagemanet\HolidayManagement\obj\Debug\netcoreapp3.1\Razor\Views\Staffs\Index.cshtml.g.cs
+C:\Users\mirce\Source\Repos\HolidayManagemanet\HolidayManagement\obj\Debug\netcoreapp3.1\Razor\Views\Staffs\Index2.cshtml.g.cs
+C:\Users\mirce\Source\Repos\HolidayManagemanet\HolidayManagement\obj\Debug\netcoreapp3.1\Razor\Views\Requests\Index2.cshtml.g.cs

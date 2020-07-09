@@ -30,11 +30,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Type)
             </td>
+            @if(item.HolidayTypeID > 2){
             <td>
                 <a asp-action="Edit" asp-route-id="@item.HolidayTypeID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.HolidayTypeID">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.HolidayTypeID">Delete</a>
             </td>
+            }
         </tr>
 }
     </tbody>

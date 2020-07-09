@@ -1,5 +1,12 @@
 ﻿
 
+body {
+    background-image: url("../img/Photo3.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -15,12 +22,14 @@ a {
     text-align: center;
     text-decoration: none;
     display: inline-block;
+
 }
 
-a:hover, a:active {
-    color: white;
-    background-color: grey;
-}
+    a:hover, a:active {
+        color: white;
+        background-color: grey;
+        text-decoration-line: none;
+    }
 
 .btn-primary {
     color: black;
@@ -79,9 +88,6 @@ body {
   line-height: 60px; /* Vertically center the text there */
 }
 
-.btn-primary:hover {
-    border-bottom: 3px solid red;
-}
 
 .button {
 

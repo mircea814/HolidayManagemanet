@@ -24,6 +24,11 @@ namespace HolidayManagement.Controllers
             var context = _context.MyStaff.Include(s => s.Office).Include(s => s.StaffStatus);
             return View(await context.ToListAsync());
         }
+        public async Task<IActionResult> Index2()
+        {
+            var context = _context.MyStaff.Include(s => s.Office).Include(s => s.StaffStatus);
+            return View(await context.ToListAsync());
+        }
 
         // GET: Staffs/Details/5
         public async Task<IActionResult> Details(int? id)

@@ -1,14 +1,10 @@
 ﻿@model IEnumerable<HolidayManagement.Models.Staff>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Index2";
 }
 
-    <h1>List of staff.</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+    <h1>List of staff and holidays.</h1>
 <table class="table">
     <thead>
         <tr>
@@ -31,7 +27,8 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.StaffID)
@@ -48,12 +45,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.StaffStatus.Status)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.StaffID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.StaffID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.StaffID">Delete</a>
-            </td>
         </tr>
-}
+        }
     </tbody>
 </table>

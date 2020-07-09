@@ -25,6 +25,12 @@ namespace HolidayManagement.Controllers
             return View(await context.ToListAsync());
         }
 
+        public async Task<IActionResult> Index2()
+        {
+            var context = _context.MyRequests.Include(r => r.HolidayType).Include(r => r.RequestStatus).Include(r => r.Staff);
+            return View(await context.ToListAsync());
+        }
+
         // GET: Requests/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -64,6 +70,7 @@ namespace HolidayManagement.Controllers
         {
             if (ModelState.IsValid)
             {
+                request.RequestStatusID = 2;
                 _context.Add(request);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -155,7 +162,7 @@ namespace HolidayManagement.Controllers
         public async Task<IActionResult> Reject(int id)
         {
             var request = await _context.MyRequests.FindAsync(id);
-            request.RequestStatus = _context.MyRequestStatuses.Find(2);
+            request.RequestStatus = _context.MyRequestStatuses.Find(3);
 
             try
             {
@@ -172,7 +179,33 @@ namespace HolidayManagement.Controllers
                     throw;
                 }
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index2));
+        }
+
+        public async Task<IActionResult> Accept(int id)
+        {
+            var request = await _context.MyRequests.FindAsync(id);
+          //  var staffstatus = await _context.MyStaffStatuses.FindAsync(id);
+            request.RequestStatus = _context.MyRequestStatuses.Find(1);
+         //   staffstatus. = _context.MyStaffStatuses.Find(1);
+
+            try
+            {
+                _context.Update(request);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (RequestExists(request.RequestID))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index2));
         }
 
         // POST: Requests/Delete/5
